@@ -20,13 +20,19 @@ var init = function (window) {
         ////////////////////////////////////////////////////////////
         
         // TODO 1 : Declare and initialize our variables
+var x;
+var y;
+var radius;
 
 
         // TODO 2 : Create a function that draws a circle 
+        function drawCircle(x, y, radius ){
+            
+        }
         
 
         // TODO 3 / 8 : Call the drawCircle() function 
-
+drawCircle();
 
         ////////////////////////////////////////////////////////////
         ///////////////// PROGRAM LOGIC ////////////////////////////

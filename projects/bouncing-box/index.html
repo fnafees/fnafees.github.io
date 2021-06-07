@@ -19,6 +19,7 @@
 		.board{
 			height: 100vh;
 			background-image: url(https://static.onecms.io/wp-content/uploads/sites/20/2021/03/15/drake-2000.jpg);
+			background-size: 100% 100%;
 		}
 	</style>
 	<!-- 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
@@ -106,10 +107,10 @@
 			the left side of the screen.
 			*/
 			function getRandomColor(){
-				return "#" + (0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
+				return Math.floor(Math.random()*16777215).toString(16);
 			};
 			function Thomas(){
-				return "#" + (Math.round() * 0xffffff).toString(16);
+				return "#" + Math.round(Math.random() * 0xffffff).toString(16);
 			};
 			
 			function handleBoardClick(){
@@ -144,9 +145,10 @@
 				else if(speedY< 0){
 					speedY = speedY- a;
 				}
-				
-				box.css('background-color', (getRandomColor()));
-				console.log(getRandomColor());
+				let randcolor = getRandomColor();
+				box.css('background-color',"#" + randcolor);
+				box.css('color', randcolor );
+				console.log(Thomas());
 			
 	};
 		})();
