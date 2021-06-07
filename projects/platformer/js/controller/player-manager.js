@@ -11,7 +11,7 @@
         
         cursors = game.cursors = game.input.keyboard.createCursorKeys();
         game.input.keyboard.addCallbacks(this, onDown, onUp, onPress);
-        
+      
         function onDown() {
             
         }
