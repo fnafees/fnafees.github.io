@@ -8,16 +8,17 @@
 		.box {
 			width: 70px;
 			height: 70px;
-			background-color: teal;
 			font-size: 300%;
 			text-align: center;
 			display: block;
 			position: absolute;
-			top: 100px;
+			top: 0px;
 			left: 0px;  /* <--- Change me! */
+			background-color: teal;
 		}
 		.board{
 			height: 100vh;
+			background-image: url(https://static.onecms.io/wp-content/uploads/sites/20/2021/03/15/drake-2000.jpg);
 		}
 	</style>
 	<!-- 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script> -->
@@ -39,17 +40,23 @@
 			var box = jQuery('.box');	// reference to the HTML .box element
 			var board = jQuery('.board');	// reference to the HTML .board element
 			var boardWidth = board.width();	// the maximum X-Coordinate of the screen
+			var boardHeight = jQuery(window).height(); 
 
 			// Every 50 milliseconds, call the update Function (see below)
-			setInterval(update, 50);
+			var interval = setInterval(update, 50);
 			
 			// Every time the box is clicked, call the handleBoxClick Function (see below)
 			box.on('click', handleBoxClick);
-
+			board.on('click', handleBoardClick);
 			// moves the Box to a new position on the screen along the X-Axis
-			function moveBoxTo(newPositionX) {
+			function moveBoxTo(newPositionX, newPositionY) {
 				box.css("left", newPositionX);
+				box.css("top", newPositionY);
 			}
+		function endGame()
+		{
+			clearInterval(interval);
+		}
 
 			// changes the text displayed on the Box
 			function changeBoxText(newText) {
@@ -61,19 +68,36 @@
 			//////////////////////////////////////////////////////////////////
 			
 			// TODO 2 - Variable declarations 
-			
-
+			var positionY = 0;
+			var speedY = 10;
 			var positionX = 0;
 			var points = 0;
+			var speed = 10;
+			var misclick = 0;
 			/* 
+;
 			This Function will be called 20 times/second. Each time it is called,
 			it should move the Box to a new location. If the box drifts off the screen
 			turn it around! 
 			*/
 			function update() {
-				positionX = positionX + 10;
-				moveBoxTo(positionX);
+				positionX = positionX + speed;
+				positionY = positionY + speedY;
+				moveBoxTo(positionX, positionY);
+				if( positionX > boardWidth )
+				{
+					speed = -speed;
+				}
+				else if(positionX<0){
+					speed = -speed;
+				}
 
+				if(positionY>boardHeight){
+				speedY = -speedY;
+				}
+				else if(positionY<0){
+					speedY = -speedY;
+				}
 			};
 
 			/* 
@@ -81,12 +105,50 @@
 			it should increase the points total, increase the speed, and move the box to
 			the left side of the screen.
 			*/
+			function getRandomColor(){
+				return "#" + (0x1000000+Math.random()*0xffffff).toString(16).substr(1,6);
+			};
+			function Thomas(){
+				return "#" + (Math.round() * 0xffffff).toString(16);
+			};
+			
+			function handleBoardClick(){
+			misclick = misclick +1;
+			if(misclick>= 10)
+			{
+				endGame();
+			};
+
+			}
 			function handleBoxClick() {
-				positionX = 0;
+				var a = 3;
+				positionX = Math.random() * boardWidth;
+				positionY = Math.random() * boardHeight;
 				points = points + 1;
 				changeBoxText(points);
-
-			};
+				if(points%3 === 0){
+					a = a + 3;
+				}
+				if(speed>0){
+				speed = speed + a;
+				
+				}
+				else if( speed < 0)
+				{
+					speed = speed - a;
+				}
+				if(speedY>0)
+				{
+					speedY = speedY + a;
+				}
+				else if(speedY< 0){
+					speedY = speedY- a;
+				}
+				
+				box.css('background-color', (getRandomColor()));
+				console.log(getRandomColor());
+			
+	};
 		})();
 	</script>
 </body>
