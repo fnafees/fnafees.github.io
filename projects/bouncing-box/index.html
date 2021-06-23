@@ -27,7 +27,7 @@
 </head>
 <body class="board">
 	<!-- HTML for the box -->
-	<div class="box">?</div>
+	<button class="box">?</button>
 
 	<script>
 		(function(){
@@ -44,7 +44,7 @@
 			var boardHeight = jQuery(window).height(); 
 
 			// Every 50 milliseconds, call the update Function (see below)
-			var interval = setInterval(update, 50);
+			var interval = setInterval(update, 20);
 			
 			// Every time the box is clicked, call the handleBoxClick Function (see below)
 			box.on('click', handleBoxClick);
@@ -57,6 +57,8 @@
 		function endGame()
 		{
 			clearInterval(interval);
+			box.off('click');
+			board.off('click');
 		}
 
 			// changes the text displayed on the Box
@@ -70,10 +72,10 @@
 			
 			// TODO 2 - Variable declarations 
 			var positionY = 0;
-			var speedY = 10;
+			var speedY = 3;
 			var positionX = 0;
 			var points = 0;
-			var speed = 10;
+			var speed = 3;
 			var misclick = 0;
 			/* 
 ;
@@ -107,7 +109,7 @@
 			the left side of the screen.
 			*/
 			function getRandomColor(){
-				return Math.floor(Math.random()*16777215).toString(16);
+				return Math.floor(Math.random()*16777215);
 			};
 			function Thomas(){
 				return "#" + Math.round(Math.random() * 0xffffff).toString(16);
@@ -146,10 +148,10 @@
 					speedY = speedY- a;
 				}
 				let randcolor = getRandomColor();
-				box.css('background-color',"#" + randcolor);
-				box.css('color', randcolor );
-				console.log(Thomas());
-			
+				box.css('background-color',"#" + randcolor.toString(16));
+				box.css('color', "#" + (0xffffff - randcolor).toString(16));
+				
+				
 	};
 		})();
 	</script>
